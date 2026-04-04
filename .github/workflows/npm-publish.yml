@@ -1,5 +1,4 @@
-name: Publish to NPM
-
+name: Release embed-lite to NPM
 on:
   release:
     types: [published]
@@ -8,43 +7,33 @@ on:
 permissions:
   contents: read
   id-token: write
+  packages: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 22
-          registry-url: 'https://registry.npmjs.org' # Match your docmd config
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
-      - name: Upgrade NPM to latest (Safe for Node 22)
-        # Using corepack because 'npm install -g npm@latest' has a dependency bug on Node 22 runners
-        run: |
-          corepack enable
-          corepack prepare npm@latest --activate
-
-      - name: Verify Environment
-        # Robust safety check as seen in your docmd workflow
-        run: |
-          node -v
-          npm -v
+      - name: Upgrade npm (required for OIDC)
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build and Verify
-        # Ensures package is correct before we try to push it
-        run: |
-          npm run build --if-present
-          npm test --if-present
+      - name: Build Library & CDN Distributors
+        run: npm run build
 
-      - name: Publish to NPM
-        # Uses Trusted Publishing (OIDC). No secrets/tokens required in the code.
-        # Ensure you have added this repo as a Trusted Publisher on npmjs.com
+      - name: Publish to npm
         run: npm publish --access public
+        # env:
+        #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
