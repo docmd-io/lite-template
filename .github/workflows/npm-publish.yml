@@ -20,19 +20,31 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
+          registry-url: 'https://registry.npmjs.org' # Match your docmd config
           cache: 'npm'
 
       - name: Upgrade NPM to latest (Safe for Node 22)
+        # Using corepack because 'npm install -g npm@latest' has a dependency bug on Node 22 runners
         run: |
           corepack enable
           corepack prepare npm@latest --activate
-          npm --version
+
+      - name: Verify Environment
+        # Robust safety check as seen in your docmd workflow
+        run: |
+          node -v
+          npm -v
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (if script exists)
-        run: npm run build --if-present
+      - name: Build and Verify
+        # Ensures package is correct before we try to push it
+        run: |
+          npm run build --if-present
+          npm test --if-present
 
       - name: Publish to NPM
-        run: npm publish --access public
+        # Uses Trusted Publishing (OIDC). No secrets/tokens required in the code.
+        # Ensure you have added this repo as a Trusted Publisher on npmjs.com
+        run: npm publish --access public --provenance
