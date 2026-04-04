@@ -47,4 +47,4 @@ jobs:
       - name: Publish to NPM
         # Uses Trusted Publishing (OIDC). No secrets/tokens required in the code.
         # Ensure you have added this repo as a Trusted Publisher on npmjs.com
-        run: npm publish --access public --provenance
+        run: npm publish --access public
