@@ -1,0 +1,43 @@
+{
+  "name": "lite-template",
+  "version": "0.1.0",
+  "description": "Ultra lightweight, zero-dependency async template engine compatible with basic EJS syntax.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "ejs",
+    "template",
+    "engine",
+    "micro",
+    "lite",
+    "async",
+    "minimal",
+    "lightweight",
+    "typescript",
+    "javascript",
+    "nodejs",
+    "docmd"
+  ],
+  "author": {
+    "name": "Ghazi",
+    "url": "https://mgks.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docmd-io/docmd.git",
+    "directory": "lite-template"
+  },
+  "bugs": {
+    "url": "https://github.com/docmd-io/docmd/issues"
+  },
+  "homepage": "https://docmd.io",
+  "funding": "https://github.com/sponsors/mgks",
+  "license": "MIT"
+}
