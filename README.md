@@ -23,7 +23,7 @@ To prioritize performance and maintain its minimalist footprint (<10KB), `lite-t
 
 1.  **Strictly Logic-Driven**: Unlike EJS, it does not include a complex built-in caching layer. Reusable templates should be pre-compiled using `compile()` at the application level.
 2.  **Explicit Scope**: Uses the `with` block for performance. Variables must be defined within the provided `data` object to be accessible; it does not automatically pull from global scope.
-3.  **No Layout System**: Does not include a proprietary EJS `<%- layout() %>` system. Layout/Include handling is left to the developer via standard async calls (e.g., `<%- await include(...) %>`).
+3.  **Include System**: A native `include()` function works out-of-the-box (just like EJS) when `options.filename` is provided to `render()`, managing recursive resolution automatically. Does not implement `<%- layout() %>` systems.
 4.  **No Middleware Integration**: This is a pure string-to-HTML engine—no native Express.js view-engine integration is included out of the box.
 5.  **ESM Only**: Built exclusively for modern ESM toolchains.
 
@@ -74,6 +74,22 @@ const template = `
 const html = await render(template, {
   users: [{ name: "Alice" }, { name: "Bob" }]
 });
+```
+
+### Native Built-in Includes
+
+When you pass `filename` in the options, `lite-template` automatically exposes a built-in cross-file `include()` resolver.
+
+```javascript
+// page.ejs
+// <h1>My Page</h1>
+// <%- await include('footer', { text: "Copyright" }) %>
+
+const html = await render(
+  '<%- await include("footer") %>', 
+  { globalVar: true }, 
+  { filename: '/path/to/page.ejs' }
+);
 ```
 
 ### First-Class Async/Await
