@@ -14,28 +14,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
 
-      - name: Ensure recent npm
+      - name: Upgrade npm (required for OIDC)
         run: npm install -g npm@latest
 
-      #- name: Install dependencies
-      #  run: npm ci
-
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build package
+      - name: Build Library & CDN Distributors
         run: npm run build
 
       - name: Publish to npm
         run: npm publish --access public
-        #env:
-        #  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # env:
+        #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
