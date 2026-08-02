@@ -21,8 +21,8 @@
     "test": "npm run build >/dev/null && node --test"
   },
   "devDependencies": {
-    "@types/node": "^25.9.3",
-    "typescript": "^5.0.0"
+    "@types/node": "^26.1.2",
+    "typescript": "^7.0.2"
   },
   "keywords": [
     "ejs",
