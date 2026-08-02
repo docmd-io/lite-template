@@ -127,6 +127,10 @@ const html = await render(template, {
 **Returns:**
 - `(data) => Promise<string>`: A reusable, high-performance async render function.
 
+## Security Note
+
+Like EJS, `lite-template` compiles template logic into executable JavaScript and evaluates it against the provided `data`. Only render templates you control or that come from a trusted source. Never render untrusted, user-supplied template strings, exactly as you would not with EJS. The `<%= %>` tag escapes HTML output; use `<%- %>` only for values that are already known to be safe.
+
 ## License
 
 MIT - Developed under the docmd ecosystem.
