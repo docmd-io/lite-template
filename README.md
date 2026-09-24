@@ -27,7 +27,6 @@ To prioritize performance and maintain its minimalist footprint (<10KB), `lite-t
 4.  **No Middleware Integration**: This is a pure string-to-HTML engine—no native Express.js view-engine integration is included out of the box.
 5.  **ESM Only**: Built exclusively for modern ESM toolchains.
 
-
 *   **Async Native Engine**: Supports `await` natively within any `<% ... %>` or `<%= ... %>` block without messy workarounds.
 *   **Optimal Performance**: Compiles template strings directly into optimized JavaScript function strings, skipping the AST-processing overhead of heavier engines.
 *   **Predictable Scoping**: Leverages the JavaScript `with` scope for safe, predictable, and performant variable resolution.
